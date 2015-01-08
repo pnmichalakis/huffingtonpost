@@ -4,6 +4,11 @@ Bundler.require
 require 'dotenv'
 Dotenv.load
 
+ActiveRecord::Base.establish_connection({
+	adapter: 'postgresql',
+	database:'huffpost_tweets_database'
+})
+
 get '/' do
 	client = Twitter::REST::Client.new do |config|
   	config.consumer_key        = ENV['CONSUMERKEY']
