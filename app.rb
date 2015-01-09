@@ -18,9 +18,12 @@ get '/' do
   	config.access_token        = ENV['ACCESSTOKEN']
   	config.access_token_secret = ENV['ACCESSTOKENSECRET']
 	end
-	@trends = client.get("https://api.twitter.com/1.1/trends/place.json?id=1")
-	@trends_name_array = trends.first[:trends].map do |trend|
+	@trends = @client.get("https://api.twitter.com/1.1/trends/place.json?id=1")
+	@trends_name_array = @trends.first[:trends].map do |trend|
 												trend[:name]
 											end
+	@trends_name_array.map do |trend|
+		Trend.create({name: trend})
+	end
 	erb :index
 end
